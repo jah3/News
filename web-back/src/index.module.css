@@ -1,0 +1,171 @@
+/* index.module.css */
+.container {
+  padding: 0px;
+}
+
+.timePublication {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 5px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.articleImage {
+  width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.articleContent {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Adjust the navbar background color as needed */
+.navBar {
+  background-color: red; /* Assuming you want to keep the color you provided */
+}
+
+/* Bootstrap overrides if needed */
+.navbar-light .navbar-brand {
+  color: #fff;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: #fff;
+}
+
+.navbar-light .navbar-toggler {
+  color: #fff;
+  border-color: #fff;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' fill='%23FFF' viewBox='0 0 30 30'><path stroke='%23FFF' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+}
+
+/* Responsive image for figure */
+.figure img {
+  max-width: 100%;
+  height: auto;
+}
+
+.figure-caption {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.buttonIolki{   display: flex;
+
+  max-width: 400px;
+  margin: 50px auto;
+}
+.articleImage{
+  width: 300px;
+}
+/* index.module.css */
+
+/* ... existing styles ... */
+
+.articleBody {
+  display: flex;
+  align-items: start;
+  gap: 16px; /* Adjust the gap as needed */
+}
+
+.figure {
+  margin: 0; /* Adjust as needed */
+}
+
+.articleImage {
+  width: 600px; /* Adjust as needed */
+  height: auto;
+}
+
+.articleContent {
+  flex: 1;
+}
+
+/* Responsive layout for mobile devices */
+@media (max-width: 968px) {
+  .articleBody {
+    flex-direction: column;
+  }
+
+  .figure {
+    width: 100%; /* Full width on mobile */
+  }
+
+  .articleImage {
+    width: 100%;
+    max-width: none; /* Allow image to be full width on mobile */
+  }
+}
+
+/* ... additional styles ... */
+
+.formHeader {
+  text-align: center;
+  margin-bottom: 30px; /* Add more space below the header */
+  color: #333; /* Darker font color for better contrast */
+}
+/* index.module.css */
+.chatButton {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background-color: #007bff; /* Bootstrap primary color */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.chatInterface {
+  position: fixed;
+  right: 20px;
+  bottom: 80px; /* Position above the chat button */
+  width: 300px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.chatHeader {
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.chatBody {
+  height: 200px;
+  overflow-y: auto;
+}
+
+.chatInput {
+  margin-top: 10px;
+}
+
+.chatInput input {
+  width: calc(100% - 60px);
+  padding: 5px;
+}
+
+.chatInput button {
+  width: 50px;
+  margin-left: 10px;
+}
