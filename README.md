@@ -18,8 +18,8 @@ The Login Page is designed for administrators to gain access to the Admin Panel.
 
 As an administrator, the Admin Panel Page is your hub for content management. Here, you can publish new articles, update existing content, and delete any articles as needed. The interface is user-friendly, providing a seamless content management experience.
 
-![Admin Panel Page](![image](https://github.com/jah3/News/assets/53344968/e3c9ccf1-120f-434e-951d-a3ae5faceb4d)
-)
+![Admin Panel Page](https://github.com/jah3/News/assets/53344968/e3c9ccf1-120f-434e-951d-a3ae5faceb4d)
+
 
 ---
 
