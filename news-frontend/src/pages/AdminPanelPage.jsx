@@ -3,12 +3,24 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../index.module.css';
 import {Button} from "antd";
 import AXIOS from "../service/AxiosService.jsx";
+import AppService from "../service/AppService.jsx";
+import {useNavigate} from 'react-router-dom';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
+import Cookies from 'js-cookie';
 
 const AdminPanelPage = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
     const [articles, setArticles] = useState([]);
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        // Clear the cookie
+        Cookies.remove('userLoggedIn');
+        // Navigate to the news page
+        navigate('/news');
+    };
 
     useEffect(() => {
         // Fetch articles when the component mounts
@@ -23,58 +35,24 @@ const AdminPanelPage = () => {
 
         fetchArticles();
     }, []);
-
-    const deleteArticle = async (title) => {
-        try {
-            // Encode the title to ensure special characters are handled correctly in the URL
-            const encodedTitle = encodeURIComponent(title);
-            const response = await AXIOS.delete(`/api/delete/article/${encodedTitle}`);
-
-            if (response.status === 200) {
-                // Filter out the deleted article from the articles state
-                setArticles(articles.filter(article => article.title !== title));
-            }
-        } catch (error) {
-            console.error('Error deleting article:', error);
-        }
+    const handleDelete = (titleToDelete) => {
+        AppService.deleteArticle(titleToDelete, setArticles);
     };
-
-
+    const handleSubmit = (event) => {
+        AppService.handleSubmit(event, {
+            title,
+            content,
+            selectedFile,
+            articles,
+            setArticles,
+            setTitle,
+            setContent,
+            setSelectedFile
+        });
+    };
     const handleFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
     };
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        let formData = new FormData();
-        formData.append('articleRequest', new Blob([JSON.stringify({title, content})], {
-            type: "application/json"
-        }));
-        formData.append('image', selectedFile);
-
-        try {
-            const response = await AXIOS.post('/create-article', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-
-            // Assuming the response includes the new article, add it to the state
-            const newArticle = response.data;
-            setArticles(prevArticles => [newArticle, ...prevArticles]);
-
-            // Clear the form fields
-            setTitle('');
-            setContent('');
-            setSelectedFile(null);
-        } catch (error) {
-            console.error('There was an error!', error);
-        }
-    };
-
-
-
     return (
         <section className={styles.container}>
             <section className="navBar">
@@ -102,9 +80,14 @@ const AdminPanelPage = () => {
                                     </a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">
+                                    <a className="nav-link disabled" href="#" tabIndex="1" aria-disabled="true">
                                         Testing
                                     </a>
+                                </li>
+                                <li className="nav-item">
+                                    <button onClick={handleLogout} className="nav-link btn btn-link">
+                                        <FontAwesomeIcon icon={faSignOutAlt}/> Logout
+                                    </button>
                                 </li>
                             </ul>
                         </div>
@@ -155,12 +138,12 @@ const AdminPanelPage = () => {
                 <h3 className={styles.formHeader}>List of published articles</h3>
                 <ul className="list-group">
                     {articles
-                        .sort((a, b) => new Date(b.publicationDate) - new Date(a.publicationDate)) // Assuming 'publishedAt' is your date field
-                        .map((article, index) => (
-                            <li key={index}
+                        .sort((a, b) => new Date(b.publicationDate) - new Date(a.publicationDate)) // Assuming 'publicationDate' is your date field
+                        .map((article) => (
+                            <li key={article.id} // Use a unique identifier here instead of index
                                 className="list-group-item d-flex justify-content-between align-items-center">
                                 {article.title}
-                                <button onClick={() => deleteArticle(article.title)} className="btn btn-danger">
+                                <button onClick={() => handleDelete(article.title)} className="btn btn-danger">
                                     <i className="bi bi-trash"></i> Delete
                                 </button>
                             </li>

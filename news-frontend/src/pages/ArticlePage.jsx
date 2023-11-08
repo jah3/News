@@ -3,12 +3,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../index.module.css';
 import {Button} from 'antd';
 import AXIOS from '../service/AxiosService.jsx';
-import {MessageOutlined} from '@ant-design/icons';
 
 function ArticlePage() {
     const [articles, setArticles] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
-    const [isChatOpen, setIsChatOpen] = useState(false); // State to manage chat visibility
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -28,25 +26,6 @@ function ArticlePage() {
 
         fetchArticles();
     }, []);
-
-    // Function to toggle chat interface
-    const toggleChat = () => {
-        setIsChatOpen(!isChatOpen);
-    };
-    // Chat interface component (simple example)
-    const ChatInterface = () => (
-        <div className={styles.chatInterface}>
-            {/* Simple chat UI */}
-            <div className={styles.chatHeader}>Chat with us!</div>
-            <div className={styles.chatBody}>
-                {/* Chat messages would go here */}
-            </div>
-            <div className={styles.chatInput}>
-                <input type="text" placeholder="Type a message..."/>
-                <button>Send</button>
-            </div>
-        </div>
-    );
 
 
     const articlesPerPage = 2;
@@ -141,12 +120,6 @@ function ArticlePage() {
                     Next
                 </Button>
             </div>
-            <div className={styles.chatButton} onClick={toggleChat}>
-                <MessageOutlined style={{fontSize: '24px', color: '#fff'}}/>
-            </div>
-
-            {/* Conditionally render the chat interface */}
-            {isChatOpen && <ChatInterface/>}
         </div>
     );
 }

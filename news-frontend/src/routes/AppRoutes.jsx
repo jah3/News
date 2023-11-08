@@ -2,6 +2,7 @@ import {Navigate, Route, Routes} from "react-router-dom";
 import LoginPage from "../pages/LoginPage.jsx";
 import ArticlePage from "../pages/ArticlePage.jsx";
 import AdminPanelPage from "../pages/AdminPanelPage.jsx";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 
 const AppRoutes = () => {
     return (
@@ -9,7 +10,11 @@ const AppRoutes = () => {
             <Route exact path="/" element={<Navigate to={"/news"}/>}/>
             <Route path="/login" element={<LoginPage/>}/>
             <Route path="/news" element={<ArticlePage/>}/>
-            <Route path="/admin-panel" element={<AdminPanelPage/>}/>
+            <Route path="/admin-panel" element={
+                <ProtectedRoute>
+                    <AdminPanelPage />
+                </ProtectedRoute>
+            } />
         </Routes>
     );
 }

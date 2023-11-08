@@ -2,38 +2,23 @@
 import styles from '../LoginPage.module.css';
 import AXIOS from "../service/AxiosService.jsx";
 import React, {useState} from "react";
+import AppService from "../service/AppService.jsx";
 
 const LoginPage = () => {
     // Function to handle the login logic
 
     const [userNotFound, setUserNotFound] = useState(false);
-
+    const handleLoginClick = () => {
+        // Pass setUserNotFound to the service function
+        AppService.handleButtonClick(setUserNotFound);
+    };
     const handleLogin = (event) => {
         event.preventDefault();
         // Here you would handle the login logic, like validating the input and setting the user session
         console.log('Login attempt');
     };
 // Function to handle the button click
-    const handleButtonClick = () => {
-        // Get the values directly from the DOM
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
 
-        // Make the POST request with axios
-        AXIOS.post('/user', {username, password})
-            .then(response => {
-                // Handle the response here
-                console.log('User created:', response.data);
-               window.location.href = '/admin-panel';
-            })
-            .catch(error => {
-                // Handle errors here
-                setUserNotFound(true);
-                console.error('There was an error!', error);
-            });
-
-
-    };
     return (
 
         <div className={styles.loginContainer}>
@@ -81,7 +66,7 @@ const LoginPage = () => {
                     <input type="password" id="password" name="password" required/>
                 </div>
                 {userNotFound && <h4>User does not exists!</h4>}
-                <button type="submit" className={styles.loginButton} onClick={handleButtonClick}>Submit</button>
+                <button type="submit" className={styles.loginButton} onClick={handleLoginClick}>Submit</button>
             </form>
         </div>
     );
