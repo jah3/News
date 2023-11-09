@@ -6,8 +6,7 @@ Welcome to the News Application documentation. Here you'll find information abou
 
 On the News Main Page, users are presented with the latest news articles, sorted by the newest first. This ensures that you're always up-to-date with the latest happenings.
 
-![News Main Page](https://github.com/jah3/News/assets/53344968/294d4777-bfd3-450d-9b32-ed585aad8ced)
-
+![News Main Page](https://github.com/jah3/News/assets/53344968/0b88a73b-8561-4427-ba85-38239de3874a)
 ## Login Page
 
 The Login Page is designed for administrators to gain access to the Admin Panel. Once you enter your credentials and log in successfully, you will be redirected to the Admin Panel where you can manage the news articles.
