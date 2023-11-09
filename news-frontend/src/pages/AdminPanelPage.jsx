@@ -15,6 +15,7 @@ const AdminPanelPage = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [articles, setArticles] = useState([]);
     const navigate = useNavigate();
+
     const handleLogout = () => {
         // Clear the cookie
         Cookies.remove('userLoggedIn');

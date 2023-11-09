@@ -7,6 +7,8 @@ import AXIOS from '../service/AxiosService.jsx';
 function ArticlePage() {
     const [articles, setArticles] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
+    const articlesPerPage = 2;
+    const totalPages = Math.ceil(articles.length / articlesPerPage);
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -22,14 +24,9 @@ function ArticlePage() {
                 console.error('Error fetching articles:', error);
             }
         };
-
-
         fetchArticles();
     }, []);
 
-
-    const articlesPerPage = 2;
-    const totalPages = Math.ceil(articles.length / articlesPerPage);
 
     const goToNextPage = () => {
         setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
@@ -55,7 +52,13 @@ function ArticlePage() {
         };
         return date.toLocaleString('en-US', options).replace(',', '');
     };
-
+    const formatContent = (content) => {
+        // Split the content by "--" and filter out any empty strings that might be generated
+        return content.split('--').filter(text => text).map((paragraph, index) => (
+            // Return a new paragraph for each split segment of content
+            <p key={index}>{paragraph.trim()}</p>
+        ));
+    };
     return (
         <div className={styles.container}>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -95,7 +98,6 @@ function ArticlePage() {
                 {displayedArticles.map((article, index) => (
                     <article key={index} className={styles.article}>
                         <header className={styles.articleHeader}>
-                            {/* Format and display the publication date */}
                             <span className={styles.timePublication}>{formatDate(article.publicationDate)}</span>
                             <h1 className={styles.title}>{article.title}</h1>
                         </header>
@@ -105,12 +107,15 @@ function ArticlePage() {
                                      className={styles.articleImage}/>
                             </figure>
                             <section className={styles.articleContent}>
-                                <p>{article.content}</p>
+                                {/* Here we call formatContent to render the content with "--" as new lines */}
+                                {formatContent(article.content)}
                             </section>
                         </div>
                     </article>
+
                 ))}
             </div>
+
 
             <div className="d-flex justify-content-center mt-4">
                 <Button className={styles.buttonIolki} onClick={goToPrevPage} disabled={currentPage === 0}>

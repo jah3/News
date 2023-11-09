@@ -169,3 +169,39 @@
   width: 50px;
   margin-left: 10px;
 }
+/* Apply smooth scrolling to the whole article container */
+.article {
+  scroll-behavior: smooth;
+  /* Other styles... */
+}
+
+/* Style the scrollbar for article content */
+.articleContent {
+  height: 300px; /* Adjust the height as needed */
+  overflow-y: auto; /* This will add a vertical scrollbar if the content is too long */
+  padding: 15px; /* Add padding for content inside the article */
+  /* Other styles... */
+}
+
+/* Style the scrollbar track (the part the thumb moves along) */
+.articleContent::-webkit-scrollbar-track {
+  background-color: #f0f0f0; /* Light grey track */
+}
+
+/* Style the scrollbar thumb (the part that's draggable) */
+.articleContent::-webkit-scrollbar-thumb {
+  background-color: #cccccc; /* Dark grey thumb */
+  border-radius: 10px; /* Rounded corners on the thumb */
+  border: 3px solid #f0f0f0; /* Creates a little space between the track and thumb */
+}
+
+/* Style the scrollbar itself (width and height) */
+.articleContent::-webkit-scrollbar {
+  width: 10px; /* Thin scrollbar */
+}
+
+/* Apply smooth scrolling specifically to the article content */
+.articleContent {
+  scroll-behavior: smooth;
+  /* Other styles... */
+}

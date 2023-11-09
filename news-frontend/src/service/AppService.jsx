@@ -10,8 +10,8 @@ const AppService = {
         AXIOS.post('/user', { username, password })
             .then(response => {
                 console.log('User created:', response.data);
-                // Set a cookie that expires in 1 minutes
-                Cookies.set('userLoggedIn', 'true', { expires: 1/1440 });
+                // Set a cookie that expires in 10 minutes
+                Cookies.set('userLoggedIn', 'true', { expires: 1/144 });
                 window.location.href = '/admin-panel';
             })
             .catch(error => {
