@@ -18,6 +18,7 @@ public class ArticleService {
 
     private final ArticlesRepository articlesRepository;
 
+
     public Articles createArticle(ArticleRequest articleDTO, MultipartFile imageFile) throws IOException {
         if (imageFile != null && !imageFile.isEmpty()) {
             byte[] imageBytes = imageFile.getBytes();
@@ -37,4 +38,5 @@ public class ArticleService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found"));
         articlesRepository.delete(articleFound);
     }
+
 }

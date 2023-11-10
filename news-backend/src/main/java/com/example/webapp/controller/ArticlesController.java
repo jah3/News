@@ -89,14 +89,11 @@ public class ArticlesController {
 
     @DeleteMapping("/api/delete/article/{title}")
     public ResponseEntity<?> deleteUserCredential(@PathVariable String title) {
-        var articleFound = articlesRepository.findByTitle(title);
-        System.out.println(articleFound);
-        if (articleFound.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found");
-        }
-        articlesRepository.delete(articleFound.get());
+        articleService.deleteArticle(title);
         return ResponseEntity.ok().build(); // Return an appropriate response entity
     }
+
+
 
     @PostMapping("/user")
     public ResponseEntity<AuthenticationRequest> registerUserCredential(@RequestBody AuthenticationRequest user) {
