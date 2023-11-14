@@ -2,6 +2,7 @@ package com.example.webapp.controller;
 
 import com.example.webapp.dto.ArticleRequest;
 import com.example.webapp.dto.AuthenticationRequest;
+import com.example.webapp.dto.AuthenticationResponse;
 import com.example.webapp.entity.Articles;
 import com.example.webapp.repository.ArticlesRepository;
 import com.example.webapp.service.ArticleService;
@@ -83,24 +84,21 @@ public class ArticleController {
 
     private final AuthenticationService authenticationService;
 
-    @DeleteMapping("/api/delete/article/{title}")
+    @DeleteMapping("/delete/article/{title}")
     public ResponseEntity<?> deleteUserCredential(@PathVariable String title) {
         articleService.deleteArticle(title);
         return ResponseEntity.ok().build(); // Return an appropriate response entity
     }
 
-
-
-    @PostMapping("/user")
-    public ResponseEntity<AuthenticationRequest> registerUserCredential(@RequestBody AuthenticationRequest user) {
-        AuthenticationRequest registeredUser = authenticationService.registerUser(user);
-        return ResponseEntity.ok(registeredUser);
-    }
-
-    @GetMapping("/api/articles")
+    @GetMapping("/public/articles")
     public ResponseEntity<List<Articles>> getAllArticles() {
         List<Articles> articles = articleService.getAllArticles();
         return ResponseEntity.ok(articles);
+    }
+
+    @GetMapping("/test")
+    public String getTest() {
+        return "WORK";
     }
 
     @PostMapping("/create-article")

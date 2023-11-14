@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button } from 'antd';
-import { Carousel } from 'react-bootstrap';
+import {Button} from 'antd';
+import {Carousel} from 'react-bootstrap';
 import styles from '../index.module.css';
 import AXIOS from '../service/AxiosService.jsx';
 
@@ -13,7 +13,7 @@ function ArticlePage() {
     useEffect(() => {
         const fetchArticles = async () => {
             try {
-                const response = await AXIOS.get('/api/articles');
+                const response = await AXIOS.get('/public/articles');
                 const sortedArticles = response.data.sort((a, b) => new Date(b.publicationDate) - new Date(a.publicationDate));
                 setArticles(sortedArticles);
             } catch (error) {
@@ -93,10 +93,10 @@ function ArticlePage() {
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <a className="nav-link" href="/login">Log In</a>
+                                <a className="nav-link" href="/register">Register</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">Home</a>
+                                <a className="nav-link" href="/login">Log In</a>
                             </li>
                         </ul>
                     </div>

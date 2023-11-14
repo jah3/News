@@ -15,9 +15,10 @@ CREATE TABLE articles
 CREATE TABLE authentication
 (
     login_id SERIAL PRIMARY KEY,
-    username TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE ,
+    username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
-    role varchar(20) NOT NULL
+    role varchar(20)
 );
 
 

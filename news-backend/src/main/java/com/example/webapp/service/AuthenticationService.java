@@ -1,30 +1,61 @@
 package com.example.webapp.service;
 
 import com.example.webapp.dto.AuthenticationRequest;
+import com.example.webapp.dto.AuthenticationResponse;
 import com.example.webapp.entity.Authentication;
 import com.example.webapp.exception.authentication.AlreadyRegisteredException;
 import com.example.webapp.repository.AuthenticationRepository;
+import com.example.webapp.security.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
 
     private final AuthenticationRepository authenticationRepository;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
 
 
-    public AuthenticationRequest registerUser(AuthenticationRequest user) {
+    public AuthenticationResponse loginUser(AuthenticationRequest user) {
 
-        var userFound = authenticationRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        user.getUsername(),
+                        user.getPassword()
+                )
+        );
+
+        var userFound = authenticationRepository.findByUsername(user.getUsername());
         if (userFound.isEmpty()) {
-            throw new AlreadyRegisteredException("This user does not exists! ");
+            throw new AlreadyRegisteredException("This user does not exists");
         }
         //authenticationRepository.save(new Authentication(user.getUsername(), user.getPassword()));
-        return user;
+        return new AuthenticationResponse(userFound.get().getUsername(), jwtService.generateToken(userFound.get()));
     }
+
+    public AuthenticationResponse registerUser(AuthenticationRequest user) {
+
+        var userFound = authenticationRepository.findByUsername(user.getUsername());
+
+        if (userFound.isPresent()) {
+            throw new AlreadyRegisteredException("User already exists");
+        }
+
+        var userEntity = authenticationRepository.save(Authentication.builder()
+                .username(user.getUsername())
+                .password(passwordEncoder.encode(user.getPassword()))
+                //.role(user.getRole())
+                .role("member")
+                .email(user.getEmail())
+                .build());
+        return new AuthenticationResponse(userEntity.getUsername(), jwtService.generateToken(userEntity));
+    }
+
+
 }

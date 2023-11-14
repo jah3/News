@@ -5,12 +5,15 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-@Setter
 @Getter
+@Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthenticationRequest {
+public class AuthenticationResponse {
     String username;
-    String password;
-    String email;
-    //String role;
+    String token;
+
+    public AuthenticationResponse(String username, String token) {
+        this.username = username;
+        this.token = token;
+    }
 }

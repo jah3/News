@@ -1,8 +1,9 @@
 // Import your CSS module here if you're using one
 import styles from '../LoginPage.module.css';
-import AXIOS from "../service/AxiosService.jsx";
-import React, {useState} from "react";
+// import AXIOS from "../service/AxiosService.jsx";
+// import React, {useState} from "react";
 import AppService from "../service/AppService.jsx";
+import {useState} from "react";
 
 const LoginPage = () => {
     // Function to handle the login logic
@@ -24,7 +25,7 @@ const LoginPage = () => {
         <div className={styles.loginContainer}>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container">
-                    <a className="navbar-brand" href="#">
+                    <a className="navbar-brand" href="/news">
                         News
                     </a>
                     <button
@@ -41,15 +42,11 @@ const LoginPage = () => {
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <a className="nav-link" href="/news">
-                                    Home
+                                <a className="nav-link" href="/register">
+                                    Register
                                 </a>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">
-                                    Testing
-                                </a>
-                            </li>
+
                         </ul>
                     </div>
                 </div>

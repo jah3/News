@@ -8,20 +8,18 @@ import {useNavigate} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
 import Cookies from 'js-cookie';
-
+import {  faHome, faPen, faUsers } from '@fortawesome/free-solid-svg-icons';
 const AdminPanelPage = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [selectedFile, setSelectedFile] = useState(null);
     const [articles, setArticles] = useState([]);
     const navigate = useNavigate();
     const [selectedFiles, setSelectedFiles] = useState([]);
 
 
     const handleLogout = () => {
-        // Clear the cookie
-        Cookies.remove('userLoggedIn');
-        // Navigate to the news page
+        // Remove the 'token' cookie instead of 'userLoggedIn'
+        Cookies.remove('token');
         navigate('/news');
     };
 
@@ -29,7 +27,7 @@ const AdminPanelPage = () => {
         // Fetch articles when the component mounts
         const fetchArticles = async () => {
             try {
-                const response = await AXIOS.get('/api/articles');
+                const response = await AXIOS.get('/public/articles');
                 setArticles(response.data);
             } catch (error) {
                 console.error('Error fetching articles:', error);
@@ -156,8 +154,9 @@ const AdminPanelPage = () => {
                     }
                 </ul>
             </section>
-
         </section>
+
+
     );
 };
 

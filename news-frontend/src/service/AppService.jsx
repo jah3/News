@@ -4,27 +4,56 @@ import AXIOS from "../service/AxiosService.jsx";
 
 const AppService = {
 
+    registerButton: (setUserAlreadyExists, navigate) => { // Accept navigate as an argument
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const email = document.getElementById('email').value;
+
+        AXIOS.post('/auth/register', {username, password, email})
+            .then(response => {
+                // Assume the JWT token is in the response data
+                const token = response.data.token;
+                // Set the JWT token in a cookie
+                Cookies.set('token', token);
+                navigate('/login'); // Use navigate for redirection
+            })
+            .catch(error => {
+                if (error.response && (error.response.status === 409 || error.response.status === 403)) {
+                    // If the status code is 409, it indicates a conflict, meaning the user already exists
+                    setUserAlreadyExists(true);
+                } else {
+                    // Handle other types of errors (e.g., network error, server error, etc.)
+                    console.error('An error occurred during registration:', error);
+                }
+            });
+    },
+
     handleButtonClick: (setUserNotFound) => {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
-
-        AXIOS.post('/user', { username, password })
+        AXIOS.post('/auth/authentication', {username, password})
             .then(response => {
-                console.log('User created:', response.data);
-                // Set a cookie that expires in 10 minutes
-                Cookies.set('userLoggedIn', 'true', { expires: 1/144 });
+                // Assume the JWT token is in the response data
+                const token = response.data.token;
+                // Set the JWT token in a cookie
+                Cookies.set('token', token);
                 window.location.href = '/admin-panel';
             })
             .catch(error => {
-                console.error('There was an error!', error);
-                setUserNotFound(true); // Set the user not found error state
+                if (error.response && error.response.status === 409 || error.response.status === 403) {
+                    // If the status code is 409, it indicates a conflict, meaning the user already exists
+                    setUserNotFound(true);
+                } else {
+                    // Handle other types of errors (e.g., network error, server error, etc.)
+                    console.error('An error occurred during registration:', error);
+                }
             });
     },
 
     deleteArticle: async (title, setArticles) => {
         try {
             const encodedTitle = encodeURIComponent(title);
-            const response = await AXIOS.delete(`/api/delete/article/${encodedTitle}`);
+            const response = await AXIOS.delete(`/delete/article/${encodedTitle}`);
 
             if (response.status === 200) {
                 // Use a functional update to ensure you have the most recent state
@@ -35,7 +64,15 @@ const AppService = {
         }
     },
 
-    handleSubmit: async (event, { title, content, selectedFiles, setArticles, setTitle, setContent, setSelectedFiles }) => {
+    handleSubmit: async (event, {
+        title,
+        content,
+        selectedFiles,
+        setArticles,
+        setTitle,
+        setContent,
+        setSelectedFiles
+    }) => {
         event.preventDefault();
 
         const cropImage = async (file) => {
@@ -84,7 +121,7 @@ const AppService = {
 
 
         let formData = new FormData();
-        formData.append('articleRequest', new Blob([JSON.stringify({ title, content })], {
+        formData.append('articleRequest', new Blob([JSON.stringify({title, content})], {
             type: "application/json"
         }));
 

@@ -4,25 +4,22 @@ import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
-const ProtectedRoute = ({ children }) => { // Ensure children is destructured from props
+const ProtectedRoute = ({ children }) => {
     const location = useLocation();
-    const isLoggedIn = Cookies.get('userLoggedIn');
+    // Replace 'userLoggedIn' with a check for the 'token' cookie
+    const token = Cookies.get('token');
 
     React.useEffect(() => {
-        // This effect will run every time the location changes
-        if (!isLoggedIn) {
-            // If the cookie is not found, redirect to the login page
+        // Redirect to login if token is not present
+        if (!token) {
             window.location.href = '/login';
         }
-    }, [location, isLoggedIn]); // Add isLoggedIn to the dependency array
+    }, [location, token]);
 
-    // If not logged in, render null or redirect
-    if (!isLoggedIn) {
+    if (!token) {
         return <Navigate to="/login" replace />;
     }
 
-    // If logged in, render the children components
     return children;
 };
-
 export default ProtectedRoute;
