@@ -205,3 +205,37 @@
   scroll-behavior: smooth;
   /* Other styles... */
 }
+
+.articleContent {
+  position: relative;
+  z-index: 2; /* Ensure articleContent is above the carousel */
+  background: white; /* Or any color that matches your design */
+  /* Rest of your styles... */
+}
+
+.articleCarousel {
+  width: 650px;
+  position: relative;
+  z-index: 1; /* Lower than articleContent to stay behind */
+  /* Rest of your styles... */
+}
+.articleCarousel .carousel-item {
+  height: 500px; /* Fixed height for the carousel item */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carouselImage {
+  max-height: 500px; /* Maximum image height to match the carousel item */
+  max-width: 100%; /* Maximum image width to prevent overflow */
+  object-fit: contain; /* Ensures the image keeps its aspect ratio */
+}
+@media only screen and (max-width: 1000px) {
+  .articleCarousel {
+    width: 100%;
+    position: relative;
+    z-index: 1; /* Lower than articleContent to stay behind */
+    /* Rest of your styles... */
+  }
+}

@@ -1,5 +1,6 @@
 package com.example.webapp.entity;
 
+import com.example.webapp.utility.ConvertJson;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Entity
 @Table(name = "articles")
@@ -32,16 +34,26 @@ public class Articles {
     @Column(name = "publication_date")
     private LocalDateTime publicationDate;
 
-    @Column(name = "image")
-    private byte[] image;
+    @Column(name = "images_json")
+    private String imagesJson; // Stores the JSON representation of images
 
-    public Articles(String title, String content) {
-        this.title = title;
-        this.content = content;
+    @Transient // This field is ignored by JPA as it's not in the database
+    private List<byte[]> images; // Used for logic in the application
+
+    public void setImages(List<byte[]> images) {
+        this.images = images;
+        this.imagesJson = ConvertJson.imagesToJson(images);
+    }
+
+    public List<byte[]> getImages() {
+        if (this.imagesJson != null && !this.imagesJson.isEmpty()) {
+            this.images = ConvertJson.jsonToImages(this.imagesJson);
+        }
+        return this.images;
     }
 
     @PrePersist
     protected void onCreate() {
-        publicationDate = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES); // This sets the publication date to the current local date and time, without seconds
+        publicationDate = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
     }
 }

@@ -15,6 +15,8 @@ const AdminPanelPage = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [articles, setArticles] = useState([]);
     const navigate = useNavigate();
+    const [selectedFiles, setSelectedFiles] = useState([]);
+
 
     const handleLogout = () => {
         // Clear the cookie
@@ -43,17 +45,18 @@ const AdminPanelPage = () => {
         AppService.handleSubmit(event, {
             title,
             content,
-            selectedFile,
-            articles,
+            selectedFiles, // Note the change from selectedFile to selectedFiles
             setArticles,
             setTitle,
             setContent,
-            setSelectedFile
+            setSelectedFiles // Note the change from setSelectedFile to setSelectedFiles
         });
     };
     const handleFileChange = (event) => {
-        setSelectedFile(event.target.files[0]);
+        // Set the selectedFiles state to the list of files
+        setSelectedFiles(event.target.files);
     };
+
     return (
         <section className={styles.container}>
             <section className="navBar">
@@ -129,6 +132,7 @@ const AdminPanelPage = () => {
                             id="formFile"
                             onChange={handleFileChange}
                             accept="image/*"
+                            multiple // This allows multiple file selection
                         />
                     </div>
                     <Button type="primary" htmlType="submit">Submit Article</Button>
