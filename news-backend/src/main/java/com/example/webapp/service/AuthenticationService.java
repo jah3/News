@@ -2,6 +2,7 @@ package com.example.webapp.service;
 
 import com.example.webapp.dto.AuthenticationRequest;
 import com.example.webapp.dto.AuthenticationResponse;
+import com.example.webapp.dto.UserDetailsResponse;
 import com.example.webapp.entity.Authentication;
 import com.example.webapp.exception.authentication.AlreadyRegisteredException;
 import com.example.webapp.repository.AuthenticationRepository;
@@ -11,6 +12,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -57,5 +61,10 @@ public class AuthenticationService {
         return new AuthenticationResponse(userEntity.getUsername(), jwtService.generateToken(userEntity));
     }
 
-
+    public List<UserDetailsResponse> getAllUsers() {
+        List<Authentication> users = authenticationRepository.findAll();
+        return users.stream()
+                .map(user -> new UserDetailsResponse(user.getUsername(), user.getEmail(), user.getRole()))
+                .collect(Collectors.toList());
+    }
 }

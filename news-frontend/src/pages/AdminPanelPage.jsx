@@ -8,22 +8,22 @@ import {useNavigate} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
 import Cookies from 'js-cookie';
-import {  faHome, faPen, faUsers } from '@fortawesome/free-solid-svg-icons';
+import {Table} from 'antd';
+import {Tab, Nav, Form, ListGroup} from 'react-bootstrap';
+
+
 const AdminPanelPage = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [articles, setArticles] = useState([]);
     const navigate = useNavigate();
     const [selectedFiles, setSelectedFiles] = useState([]);
-
-
-    const handleLogout = () => {
-        // Remove the 'token' cookie instead of 'userLoggedIn'
-        Cookies.remove('token');
-        navigate('/news');
-    };
+    const [users, setUsers] = useState([]);
+    const [key, setKey] = useState('writeArticle');
 
     useEffect(() => {
+
+        //CheckToken();
         // Fetch articles when the component mounts
         const fetchArticles = async () => {
             try {
@@ -32,10 +32,23 @@ const AdminPanelPage = () => {
             } catch (error) {
                 console.error('Error fetching articles:', error);
             }
+
+            try {
+                const response = await AXIOS.get('/users'); // Replace with your actual endpoint
+                setUsers(response.data);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
         };
+
 
         fetchArticles();
     }, []);
+    const handleLogout = () => {
+        // Remove the 'token' cookie instead of 'userLoggedIn'
+        Cookies.remove('token');
+        navigate('/news');
+    };
     const handleDelete = (titleToDelete) => {
         AppService.deleteArticle(titleToDelete, setArticles);
     };
@@ -55,6 +68,24 @@ const AdminPanelPage = () => {
         setSelectedFiles(event.target.files);
     };
 
+
+    const userColumns = [
+        {
+            title: 'Username',
+            dataIndex: 'username',
+            key: 'username',
+        },
+        {
+            title: 'Email',
+            dataIndex: 'email',
+            key: 'email',
+        },
+        {
+            title: 'Role',
+            dataIndex: 'role',
+            key: 'role',
+        },
+    ];
     return (
         <section className={styles.container}>
             <section className="navBar">
@@ -153,10 +184,10 @@ const AdminPanelPage = () => {
                         ))
                     }
                 </ul>
+                <h3 className={styles.formHeader}>List of users</h3>
+                <Table dataSource={users} columns={userColumns}/>
             </section>
         </section>
-
-
     );
 };
 

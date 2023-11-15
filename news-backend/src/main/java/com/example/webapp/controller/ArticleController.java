@@ -1,8 +1,6 @@
 package com.example.webapp.controller;
 
 import com.example.webapp.dto.ArticleRequest;
-import com.example.webapp.dto.AuthenticationRequest;
-import com.example.webapp.dto.AuthenticationResponse;
 import com.example.webapp.entity.Articles;
 import com.example.webapp.repository.ArticlesRepository;
 import com.example.webapp.service.ArticleService;

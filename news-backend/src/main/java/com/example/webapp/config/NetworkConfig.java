@@ -21,6 +21,10 @@ public class NetworkConfig {
         config.setAllowCredentials(true);
 
         config.setAllowedOrigins(Collections.singletonList("http://localhost:5173"));
+
+//        config.setAllowedOrigins(Collections.singletonList("http://172.18.96.1:5173"));
+//        config.setAllowedOrigins(Collections.singletonList("http://192.168.254.232:5173"));
+
         config.setAllowedMethods(Collections.singletonList("*"));
         config.setAllowedHeaders(Collections.singletonList("*"));
         source.registerCorsConfiguration("/**", config);

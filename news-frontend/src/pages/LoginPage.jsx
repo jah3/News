@@ -15,6 +15,9 @@ const LoginPage = () => {
     };
     const handleLogin = (event) => {
         event.preventDefault();
+        // Set a cookie with an expiration date in the past to expire it
+        //document.cookie = "userSession=; expires=Thu, 01 Jan 2070 00:00:00 UTC; path=/;";
+
         // Here you would handle the login logic, like validating the input and setting the user session
         console.log('Login attempt');
     };

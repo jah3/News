@@ -25,7 +25,7 @@ public class ApplicationSecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username ->  authenticationRepository.findByUsername(username).orElseThrow();
+        return username -> authenticationRepository.findByUsername(username).orElseThrow();
     }
 
     @Bean
@@ -34,7 +34,7 @@ public class ApplicationSecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(){
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService());
         provider.setPasswordEncoder(passwordEncoder());

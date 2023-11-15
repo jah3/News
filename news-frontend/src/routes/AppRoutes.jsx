@@ -4,6 +4,7 @@ import ArticlePage from "../pages/ArticlePage.jsx";
 import AdminPanelPage from "../pages/AdminPanelPage.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import RegisterPage from "../pages/RegisterPage.jsx";
+import CookieLoginTest from "../testing/CookieLoginTest.jsx";
 
 const AppRoutes = () => {
     return (
@@ -12,6 +13,9 @@ const AppRoutes = () => {
             <Route path="/login" element={<LoginPage/>}/>
             <Route path="/news" element={<ArticlePage/>}/>
             <Route path="/register" element={<RegisterPage/>}/>
+
+            <Route path="/test" element={<CookieLoginTest/>}/>
+
             <Route path="/admin-panel" element={
                 <ProtectedRoute>
                     <AdminPanelPage />

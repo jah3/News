@@ -11,10 +11,7 @@ const AppService = {
 
         AXIOS.post('/auth/register', {username, password, email})
             .then(response => {
-                // Assume the JWT token is in the response data
-                const token = response.data.token;
-                // Set the JWT token in a cookie
-                Cookies.set('token', token);
+
                 navigate('/login'); // Use navigate for redirection
             })
             .catch(error => {
@@ -27,16 +24,12 @@ const AppService = {
                 }
             });
     },
-
+    
     handleButtonClick: (setUserNotFound) => {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
         AXIOS.post('/auth/authentication', {username, password})
             .then(response => {
-                // Assume the JWT token is in the response data
-                const token = response.data.token;
-                // Set the JWT token in a cookie
-                Cookies.set('token', token);
                 window.location.href = '/admin-panel';
             })
             .catch(error => {
