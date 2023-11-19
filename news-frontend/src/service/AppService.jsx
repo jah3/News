@@ -1,6 +1,7 @@
 // AppService.js
-import Cookies from 'js-cookie';
+
 import AXIOS from "../service/AxiosService.jsx";
+import ArticlePage from "../pages/ArticlePage.jsx";
 
 const AppService = {
 
@@ -24,12 +25,18 @@ const AppService = {
                 }
             });
     },
-    
+
     handleButtonClick: (setUserNotFound) => {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
         AXIOS.post('/auth/authentication', {username, password})
             .then(response => {
+
+                const email = response.data.email;
+                console.log('Email:', email);
+
+                localStorage.setItem('userEmail', email);
+
                 window.location.href = '/admin-panel';
             })
             .catch(error => {
@@ -67,7 +74,7 @@ const AppService = {
         setSelectedFiles
     }) => {
         event.preventDefault();
-
+        
         const cropImage = async (file) => {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();

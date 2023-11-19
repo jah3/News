@@ -29,7 +29,7 @@
 
 .loginButton {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #40c1ac;
     color: white;
     border: none;
     border-radius: 4px;
@@ -37,5 +37,5 @@
 }
 
 .loginButton:hover {
-    background-color: #0056b3;
+    background-color: rgb(37, 55, 70) !important;
 }

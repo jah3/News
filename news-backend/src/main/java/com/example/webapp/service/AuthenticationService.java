@@ -40,7 +40,7 @@ public class AuthenticationService {
             throw new AlreadyRegisteredException("This user does not exists");
         }
         //authenticationRepository.save(new Authentication(user.getUsername(), user.getPassword()));
-        return new AuthenticationResponse(userFound.get().getUsername(), jwtService.generateToken(userFound.get()));
+        return new AuthenticationResponse(userFound.get().getUsername(),userFound.get().getEmail(), jwtService.generateToken(userFound.get()));
     }
 
     public AuthenticationResponse registerUser(AuthenticationRequest user) {
@@ -58,7 +58,7 @@ public class AuthenticationService {
                 .role("member")
                 .email(user.getEmail())
                 .build());
-        return new AuthenticationResponse(userEntity.getUsername(), jwtService.generateToken(userEntity));
+        return new AuthenticationResponse(userEntity.getUsername(), userEntity.getEmail(), jwtService.generateToken(userEntity));
     }
 
     public List<UserDetailsResponse> getAllUsers() {

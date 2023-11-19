@@ -4,8 +4,9 @@ import {Button} from 'antd';
 import {Carousel} from 'react-bootstrap';
 import styles from '../index.module.css';
 import AXIOS from '../service/AxiosService.jsx';
+import Scale from "../utility/Scale.jsx";
 
-function ArticlePage() {
+function ArticlePage( ) {
     const [articles, setArticles] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const articlesPerPage = 2;
@@ -75,62 +76,71 @@ function ArticlePage() {
     };
 
     return (
-        <div className={styles.container}>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <div className="container">
-                    <a className="navbar-brand" href="/news">News</a>
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav"
-                        aria-controls="navbarNav"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="navbar-nav">
-                            <li className="nav-item">
-                                <a className="nav-link" href="/register">Register</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="/login">Log In</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <div className={`container mt-4 ${styles.articleContainer}`}>
-                {displayedArticles.map((article, index) => (
-                    <article key={index} className={styles.article}>
-                        <header className={styles.articleHeader}>
-                            <span className={styles.timePublication}>{formatDate(article.publicationDate)}</span>
-                            <h1 className={styles.title}>{article.title}</h1>
-                        </header>
-                        <div className={styles.articleBody}>
-                            {/* First the carousel... */}
-                            {article.imagesJson && renderCarousel(article.imagesJson)}
-
-                            {/* ...then the article content, which will overlay the carousel */}
-                            <section className={styles.articleContent}>
-                                {formatContent(article.content)}
-                            </section>
+        <>
+            <Scale/>
+            <div className={styles.container}>
+                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                    <div className="container">
+                        <a className="navbar-brand" href="/news">News</a>
+                        <button
+                            className="navbar-toggler"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav"
+                            aria-controls="navbarNav"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation"
+                        >
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+                        <div className="collapse navbar-collapse" id="navbarNav">
+                            <ul className="navbar-nav">
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/register">Register</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/login">Log In</a>
+                                </li>
+                                {/*{isLoggedIn && (*/}
+                                {/*    <nav className="navbar">*/}
+                                {/*        <a href="/admin-panel">Admin Panel</a>*/}
+                                {/*    </nav>*/}
+                                {/*)}*/}
+                            </ul>
                         </div>
-                    </article>
-                ))}
-            </div>
+                    </div>
+                </nav>
+                <div className={`container mt-4 ${styles.articleContainer}`}>
+                    {displayedArticles.map((article, index) => (
+                        <article key={index} className={styles.article}>
+                            <header className={styles.articleHeader}>
+                                <span className={styles.timePublication}>{formatDate(article.publicationDate)}</span>
+                                <h1 className={styles.title}>{article.title}</h1>
+                            </header>
+                            <div className={styles.articleBody}>
+                                {/* First the carousel... */}
+                                {article.imagesJson && renderCarousel(article.imagesJson)}
 
-            <div className="d-flex justify-content-center mt-4">
-                <Button className={styles.buttonIolki} onClick={goToPrevPage} disabled={currentPage === 0}>
-                    Previous
-                </Button>
-                <Button className={styles.buttonIolki} onClick={goToNextPage} disabled={currentPage === totalPages - 1}>
-                    Next
-                </Button>
+                                {/* ...then the article content, which will overlay the carousel */}
+                                <section className={styles.articleContent}>
+                                    {formatContent(article.content)}
+                                </section>
+                            </div>
+                        </article>
+                    ))}
+                </div>
+
+                <div className="d-flex justify-content-center mt-4">
+                    <Button className={styles.buttonIolki} onClick={goToPrevPage} disabled={currentPage === 0}>
+                        Previous
+                    </Button>
+                    <Button className={styles.buttonIolki} onClick={goToNextPage}
+                            disabled={currentPage === totalPages - 1}>
+                        Next
+                    </Button>
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 

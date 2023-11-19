@@ -1,0 +1,113 @@
+/* Styles.css */
+@import url('https://fonts.googleapis.com/css?family=DM+Sans');
+
+:root {
+    --sidebar-width: 270px; /* Default width of the sidebar */
+}
+
+/* Base reset for a clean slate */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'DM Sans';
+    font-weight: revert;
+}
+
+/* Sidebar styles */
+.sidebar-container {
+    width: var(--sidebar-width);
+    height: 100%;
+    background-color: #40c1ac;
+    position: fixed;
+    top: 0;
+    left: calc(-1 * var(--sidebar-width)); /* Initially hidden, using the negative value of the sidebar width */
+    transition: left 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.sidebar-container.active {
+    left: 0; /* Slide in */
+}
+
+.sidebar-header {
+    padding: 1em;
+    background-color: #39af9c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-logo img {
+    padding-left: 10px;
+    max-width: 20%;
+    height: auto;
+}
+
+.brand-logo a {
+    color: white;
+    padding-left: 10px;
+    text-decoration: none;
+}
+
+/* Sidebar toggle button styles */
+.sidebar-toggle {
+    position: fixed;
+    top: 10px;
+    left: 15px;
+    z-index: 2000;
+    background: none;
+    border: none;
+    color: #1f1f1f;
+    font-size: 24px;
+    cursor: pointer;
+    transition: left 0.3s ease-in-out;
+}
+
+.toggle-active {
+    left: calc(var(--sidebar-width) + 10px); /* Automatically adjust to the width of the sidebar */
+}
+
+.sidebar-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* This will push the logout button to the bottom */
+    height: calc(100% - 60px); /* Adjust the value based on your sidebar's header height */
+    padding: 1.5em;
+}
+
+.nav-link {
+    font-size: 20px;
+    border-radius: 10px;
+    display: block;
+    color: #1f1f1f;
+    padding: 0.3em 0.3em !important;
+    margin: 0.5em 0.001em !important;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out;
+    background-color: white !important;
+}
+
+.nav-link:hover {
+    background-color: rgb(37, 55, 70) !important;
+    color: white !important;
+}
+
+.nav-icon {
+    margin-right: 0.5em !important;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .brand-logo img {
+        display: none;
+    }
+
+    :root {
+        --sidebar-width: 60%; /* Adjust width for smaller screens */
+    }
+
+    .toggle-active {
+        left: calc(var(--sidebar-width) + 10px); /* Adjust to match the width of the sidebar */
+    }
+}

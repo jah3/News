@@ -6,6 +6,7 @@ CREATE TABLE articles
     publication_date TIMESTAMP    NOT NULL,
     content          TEXT         NOT NULL,
     image            BYTEA
+    --userId           INTEGER REFERENCES authentication(login_id)
 );
 ALTER TABLE articles
     DROP COLUMN image,
@@ -20,5 +21,7 @@ CREATE TABLE authentication
     password TEXT NOT NULL,
     role     varchar(20)
 );
+
+
 
 
