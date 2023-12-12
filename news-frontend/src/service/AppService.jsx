@@ -74,7 +74,7 @@ const AppService = {
         setSelectedFiles
     }) => {
         event.preventDefault();
-        
+
         const cropImage = async (file) => {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();

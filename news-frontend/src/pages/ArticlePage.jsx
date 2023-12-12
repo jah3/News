@@ -4,9 +4,9 @@ import {Button} from 'antd';
 import {Carousel} from 'react-bootstrap';
 import styles from '../index.module.css';
 import AXIOS from '../service/AxiosService.jsx';
-import Scale from "../utility/Scale.jsx";
+import Scale from "../compnents/Scale.jsx";
 
-function ArticlePage( ) {
+function ArticlePage() {
     const [articles, setArticles] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const articlesPerPage = 2;
@@ -46,6 +46,8 @@ function ArticlePage( ) {
         };
         return new Date(dateString).toLocaleString('en-US', options).replace(',', '');
     };
+
+
     const formatContent = (content) => {
         // Split the content by "--" and filter out any empty strings that might be generated
         return content.split('--').filter(text => text).map((paragraph, index) => (
@@ -53,6 +55,7 @@ function ArticlePage( ) {
             <p key={index}>{paragraph.trim()}</p>
         ));
     };
+
 
     const renderCarousel = (imagesJson) => {
         try {

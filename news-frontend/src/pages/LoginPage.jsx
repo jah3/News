@@ -4,7 +4,7 @@ import styles from '../LoginPage.module.css';
 // import React, {useState} from "react";
 import AppService from "../service/AppService.jsx";
 import React, {useState} from "react";
-import Scale from "../utility/Scale.jsx";
+import Scale from "../compnents/Scale.jsx";
 
 const LoginPage = () => {
 

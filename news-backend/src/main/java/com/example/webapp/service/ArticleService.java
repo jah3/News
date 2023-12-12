@@ -1,5 +1,6 @@
 package com.example.webapp.service;
 
+import com.example.webapp.cache.CacheToDatabaseService;
 import com.example.webapp.dto.ArticleRequest;
 import com.example.webapp.entity.Articles;
 import com.example.webapp.repository.ArticlesRepository;
@@ -19,6 +20,7 @@ import java.util.List;
 public class ArticleService {
 
     private final ArticlesRepository articlesRepository;
+    private final CacheToDatabaseService cacheToDatabaseService;
 
     public Articles createArticle(ArticleRequest articleDTO, List<MultipartFile> imageFiles) throws IOException {
         List<byte[]> images = new ArrayList<>();
@@ -32,7 +34,14 @@ public class ArticleService {
         article.setTitle(articleDTO.getTitle());
         article.setContent(articleDTO.getContent());
         article.setImages(images); // Convert and set the images as JSON string
-        return articlesRepository.save(article);
+
+        // Store in Redis instead of directly saving to PostgreSQL
+        cacheToDatabaseService.cacheArticle(article.getTitle(), article);
+        return article;
+
+
+        //return articlesRepository.save(article);
+
     }
 
     public List<Articles> getAllArticles() {
