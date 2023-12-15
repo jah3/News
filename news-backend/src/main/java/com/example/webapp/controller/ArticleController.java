@@ -40,17 +40,17 @@ public class ArticleController {
         return "WORK";
     }
 
-
-    @PostMapping("/create-article")
-    public ResponseEntity<?> createArticle(
-            @RequestPart("articleRequest") ArticleRequest articleDTO,
-            @RequestPart("images") List<MultipartFile> imageFiles) {
-        try {
-            Articles article = articleService.createArticle(articleDTO, imageFiles);
-            return ResponseEntity.ok(article); // It might be more useful to return the created article, including its ID and any other generated fields.
-        } catch (IOException e) {
-            // Handle the exception properly
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing images: " + e.getMessage());
-        }
-    }
+//
+//    @PostMapping("/create-article")
+//    public ResponseEntity<?> createArticle(
+//            @RequestPart("articleRequest") ArticleRequest articleDTO,
+//            @RequestPart("images") List<MultipartFile> imageFiles) {
+//        try {
+//            Articles article = articleService.createArticle(articleDTO, imageFiles);
+//            return ResponseEntity.ok(article); // It might be more useful to return the created article, including its ID and any other generated fields.
+//        } catch (IOException e) {
+//            // Handle the exception properly
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing images: " + e.getMessage());
+//        }
+//    }
 }

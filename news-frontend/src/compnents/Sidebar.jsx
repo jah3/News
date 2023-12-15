@@ -4,7 +4,7 @@ import {
     List,
     PeopleFill,
     HouseDoorFill,
-    GearFill, DoorClosedFill, HouseFill
+    GearFill, DoorClosedFill, HouseFill, HourglassSplit
 } from 'react-bootstrap-icons';
 import AXIOS from "../service/AxiosService.jsx";
 import Cookies from "js-cookie";
@@ -77,8 +77,8 @@ function Sidebar({onTabChange}) {
                             <span className="nav-title">Users</span>
                         </a>
                         <a href="#" className="nav-link" onClick={() => onTabChange('settings')}>
-                            <GearFill className="nav-icon"/>
-                            <span className="nav-title">Settings</span>
+                            <HourglassSplit className="nav-icon"/>
+                            <span className="nav-title">Pending article</span>
                         </a>
 
                         {/* Add more nav links or submenus here */}

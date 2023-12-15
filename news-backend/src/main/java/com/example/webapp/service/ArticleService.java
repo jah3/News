@@ -1,9 +1,10 @@
 package com.example.webapp.service;
 
-import com.example.webapp.cache.CacheToDatabaseService;
 import com.example.webapp.dto.ArticleRequest;
 import com.example.webapp.entity.Articles;
+import com.example.webapp.entity.RedisArticle;
 import com.example.webapp.repository.ArticlesRepository;
+import com.example.webapp.repository.RedisRepository;
 import com.example.webapp.utility.ConvertJson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,6 @@ import java.util.List;
 public class ArticleService {
 
     private final ArticlesRepository articlesRepository;
-    private final CacheToDatabaseService cacheToDatabaseService;
 
     public Articles createArticle(ArticleRequest articleDTO, List<MultipartFile> imageFiles) throws IOException {
         List<byte[]> images = new ArrayList<>();
@@ -36,13 +36,14 @@ public class ArticleService {
         article.setImages(images); // Convert and set the images as JSON string
 
         // Store in Redis instead of directly saving to PostgreSQL
-        cacheToDatabaseService.cacheArticle(article.getTitle(), article);
-        return article;
+        //cacheToDatabaseService.cacheArticle(article.getTitle(), article);
+        //return article;
 
-
-        //return articlesRepository.save(article);
+        return articlesRepository.save(article);
 
     }
+
+
 
     public List<Articles> getAllArticles() {
         return articlesRepository.findAll();

@@ -1,15 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button} from 'antd';
-import {Carousel} from 'react-bootstrap';
+import {Carousel, Navbar} from 'react-bootstrap';
 import styles from '../index.module.css';
 import AXIOS from '../service/AxiosService.jsx';
 import Scale from "../compnents/Scale.jsx";
+import Container from 'react-bootstrap/Container';
+import Cookies from 'js-cookie';
+import Nav from 'react-bootstrap/Nav'; // Import Nav component
 
 function ArticlePage() {
     const [articles, setArticles] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const articlesPerPage = 2;
+    const token = Cookies.get('token'); // Replace 'yourTokenName' with the name of your token
+
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -82,37 +87,26 @@ function ArticlePage() {
         <>
             <Scale/>
             <div className={styles.container}>
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                    <div className="container">
-                        <a className="navbar-brand" href="/news">News</a>
-                        <button
-                            className="navbar-toggler"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#navbarNav"
-                            aria-controls="navbarNav"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation"
-                        >
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                        <div className="collapse navbar-collapse" id="navbarNav">
-                            <ul className="navbar-nav">
-                                <li className="nav-item">
-                                    <a className="nav-link" href="/register">Register</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="/login">Log In</a>
-                                </li>
-                                {/*{isLoggedIn && (*/}
-                                {/*    <nav className="navbar">*/}
-                                {/*        <a href="/admin-panel">Admin Panel</a>*/}
-                                {/*    </nav>*/}
-                                {/*)}*/}
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+                <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+                    <Container>
+                        <Navbar.Brand href="#home">News</Navbar.Brand>
+                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <Nav className="me-auto">
+                                <Nav.Link href="#features" style={{ backgroundColor: 'transparent !important' }}>[ ]</Nav.Link>
+                                <Nav.Link href="#pricing" style={{ backgroundColor: 'transparent !important' }}>[ ]</Nav.Link>
+                            </Nav>
+                            <Nav>
+                                {/* Conditionally render the link based on token presence */}
+                                {token ? (
+                                    <Nav.Link href="/admin-panel">Profile</Nav.Link>
+                                ) : (
+                                    <Nav.Link href="/login">Login</Nav.Link>
+                                )}
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Container>
+                </Navbar>
                 <div className={`container mt-4 ${styles.articleContainer}`}>
                     {displayedArticles.map((article, index) => (
                         <article key={index} className={styles.article}>

@@ -44,27 +44,68 @@ function TestAdminPanel() {
             } catch (error) {
                 console.error('Error fetching Redis data:', error);
             }
+            try {
+                const response = await AXIOS.get('/redis/data');
+                console.log("Redis Data:", response.data); // Inspect the data structure
+                setRedisData(response.data);
+            } catch (error) {
+                console.error('Error fetching Redis data:', error);
+            }
         };
 
 
         fetchArticles();
     }, []);
+
+    const calculateTimeRemaining = (expirationTimestamp) => {
+        // Log the received timestamp for debugging
+        console.log('Received timestamp:', expirationTimestamp);
+
+        const expiryTime = Number(expirationTimestamp);
+
+        if (isNaN(expiryTime) || !expiryTime) {
+            return 'Invalid timestamp';
+        }
+
+        const now = new Date().getTime();
+        const timeLeft = expiryTime - now; // time left in milliseconds
+
+        if (timeLeft <= 0) {
+            return 'Expired';
+        }
+
+        const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((timeLeft / 1000 / 60) % 60);
+
+        return `${hours}h ${minutes}m`;
+    };
+
+
+
+
     const confirmArticle = async (key) => {
         try {
-            await AXIOS.post(`/confirm-article/${key}`);
+            await AXIOS.post(`/redis/confirm-article/${key}`);
+            await deleteArticleFromRedis(key); // Call to delete the article from Redis
+
             // Refresh the list of published articles
             fetchPublishedArticles();
 
             // Refresh the list of Redis data by filtering out the confirmed article
-            setRedisData((prevData) => {
-                const newData = { ...prevData };
-                delete newData[key];
-                return newData;
-            });
+            setRedisData(prevData => prevData.filter(article => article.id !== key));
         } catch (error) {
             console.error('Error confirming article:', error);
         }
     };
+    const deleteArticleFromRedis = async (key) => {
+        try {
+            await AXIOS.delete(`/redis/delete-article/${key}`);
+            // Additional logic if needed
+        } catch (error) {
+            console.error('Error deleting article from Redis:', error);
+        }
+    };
+
 
     const fetchPublishedArticles = async () => {
         try {
@@ -75,11 +116,7 @@ function TestAdminPanel() {
         }
     };
 
-    const handleLogout = () => {
-        // Remove the 'token' cookie instead of 'userLoggedIn'
-        Cookies.remove('token');
-        navigate('/news');
-    };
+
     const handleDelete = (titleToDelete) => {
         AppService.deleteArticle(titleToDelete, setArticles);
     };
@@ -195,20 +232,14 @@ function TestAdminPanel() {
                     <div className="container mt-4 ">
                         <h3 className={styles.formHeader}>Redis Data</h3>
                         <ul className="list-group">
-                            {Object.entries(redisData).map(([key, article]) => {
-                                // Assuming 'article' is an object with a 'title' property
-                                // Make sure to safely access the title property
-                                const title = article.title || "Untitled";
-
-                                return (
-                                    <li key={key} className="list-group-item d-flex justify-content-between align-items-center">
-                                        {title}
-                                        <button onClick={() => confirmArticle(title)} className="btn btn-success">
-                                            Confirm
-                                        </button>
-                                    </li>
-                                );
-                            })}
+                            {redisData.map((article) => (
+                                <li key={article.id} className="list-group-item d-flex justify-content-between align-items-center">
+                                    {article.title}
+                                    <button onClick={() => confirmArticle(article.id)} className="btn btn-success">
+                                        Confirm
+                                    </button>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 }

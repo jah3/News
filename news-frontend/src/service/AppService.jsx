@@ -139,7 +139,7 @@ const AppService = {
         }
 
         try {
-            const response = await AXIOS.post('/create-article', formData, {
+            const response = await AXIOS.post('/redis/create-article', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

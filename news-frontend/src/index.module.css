@@ -21,6 +21,18 @@
     margin-bottom: 15px;
 }
 
+.nav-link {
+    font-size: 20px;
+    border-radius: 10px;
+    display: block;
+    color: #1f1f1f;
+    background-color: transparent !important;
+    padding: 0.3em 0.3em !important;
+    margin: 0.5em 0.1em !important;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
 .articleContent {
     font-size: 1.2rem;
     line-height: 1.6;

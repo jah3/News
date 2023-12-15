@@ -20,6 +20,7 @@
     "headlessui": "^0.0.0",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
+    "lm-react-bootstrap-navbar": "^1.1.1",
     "pica": "^9.0.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
