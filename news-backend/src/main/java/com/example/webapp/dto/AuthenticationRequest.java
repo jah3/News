@@ -12,6 +12,4 @@ public class AuthenticationRequest {
     String username;
     String password;
     String email;
-    //String role;
-
 }

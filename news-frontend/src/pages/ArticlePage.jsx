@@ -15,7 +15,6 @@ function ArticlePage() {
     const articlesPerPage = 2;
     const token = Cookies.get('token'); // Replace 'yourTokenName' with the name of your token
 
-
     useEffect(() => {
         const fetchArticles = async () => {
             try {
@@ -90,11 +89,13 @@ function ArticlePage() {
                 <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
                     <Container>
                         <Navbar.Brand href="#home">News</Navbar.Brand>
-                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                        <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="me-auto">
-                                <Nav.Link href="#features" style={{ backgroundColor: 'transparent !important' }}>[ ]</Nav.Link>
-                                <Nav.Link href="#pricing" style={{ backgroundColor: 'transparent !important' }}>[ ]</Nav.Link>
+                                <Nav.Link href="#features" style={{backgroundColor: 'transparent !important'}}>[
+                                    ]</Nav.Link>
+                                <Nav.Link href="#pricing" style={{backgroundColor: 'transparent !important'}}>[
+                                    ]</Nav.Link>
                             </Nav>
                             <Nav>
                                 {/* Conditionally render the link based on token presence */}

@@ -6,7 +6,6 @@ import com.example.webapp.entity.RedisArticle;
 import com.example.webapp.repository.ArticlesRepository;
 import com.example.webapp.repository.RedisRepository;
 import com.example.webapp.utility.ConvertJson;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

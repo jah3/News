@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/news
-    username: postgres
-    password: postgres
+    username: test
+    password: test
   flyway:
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
@@ -12,7 +12,6 @@ spring:
       host: localhost  # Redis server host
       port: 6379       # Redis server port
       password: mypassword  # Redis password, if set
-
 
 custom:
   jwt:

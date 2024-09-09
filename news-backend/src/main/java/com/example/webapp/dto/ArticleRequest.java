@@ -5,13 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-
 @Setter
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ArticleRequest {
-
-    String title;
-    String content;
+    private String title;
+    private String content;
     private byte[] image;
+
 }
