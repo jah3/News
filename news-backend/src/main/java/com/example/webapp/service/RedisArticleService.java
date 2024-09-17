@@ -29,6 +29,7 @@ public class RedisArticleService {
         redisArticle.setTitle(articleDTO.getTitle());
         redisArticle.setContent(articleDTO.getContent());
         redisArticle.setImage(convertImagesToJson(imageFiles)); // Convert images to JSON
+        redisArticle.setTag(articleDTO.getTag());
 
         return redisRepository.save(redisArticle);
     }
@@ -47,6 +48,7 @@ public class RedisArticleService {
         article.setTitle(redisArticle.getTitle());
         article.setContent(redisArticle.getContent());
         article.setImagesJson(redisArticle.getImage()); // Set images JSON directly
+        article.setTag(redisArticle.getTag());
 
         return articlesRepository.save(article);
     }

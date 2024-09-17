@@ -11,6 +11,6 @@ import lombok.experimental.FieldDefaults;
 public class ArticleRequest {
     private String title;
     private String content;
+    private String tag;
     private byte[] image;
-
 }

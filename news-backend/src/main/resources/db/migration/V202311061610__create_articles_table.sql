@@ -5,7 +5,8 @@ CREATE TABLE articles
     title            VARCHAR(255) NOT NULL,
     publication_date TIMESTAMP    NOT NULL,
     content          TEXT         NOT NULL,
-    image            BYTEA
+    image            BYTEA,
+    tag TEXT
     --userId           INTEGER REFERENCES authentication(login_id)
 );
 ALTER TABLE articles
@@ -21,7 +22,3 @@ CREATE TABLE authentication
     password TEXT NOT NULL,
     role     varchar(20)
 );
-
-
-
-

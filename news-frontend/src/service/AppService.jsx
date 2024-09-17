@@ -1,26 +1,19 @@
-// AppService.js
-
 import AXIOS from "../service/AxiosService.jsx";
-import ArticlePage from "../pages/ArticlePage.jsx";
 
 const AppService = {
-
-    registerButton: (setUserAlreadyExists, navigate) => { // Accept navigate as an argument
+    registerButton: (setUserAlreadyExists, navigate) => {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
         const email = document.getElementById('email').value;
 
-        AXIOS.post('/auth/register', {username, password, email})
+        AXIOS.post('/auth/register', { username, password, email })
             .then(response => {
-
-                navigate('/login'); // Use navigate for redirection
+                navigate('/login');
             })
             .catch(error => {
                 if (error.response && (error.response.status === 409 || error.response.status === 403)) {
-                    // If the status code is 409, it indicates a conflict, meaning the user already exists
                     setUserAlreadyExists(true);
                 } else {
-                    // Handle other types of errors (e.g., network error, server error, etc.)
                     console.error('An error occurred during registration:', error);
                 }
             });
@@ -29,22 +22,18 @@ const AppService = {
     handleButtonClick: (setUserNotFound) => {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
-        AXIOS.post('/auth/authentication', {username, password})
+        AXIOS.post('/auth/authentication', { username, password })
             .then(response => {
-
                 const email = response.data.email;
                 console.log('Email:', email);
 
                 localStorage.setItem('userEmail', email);
-
                 window.location.href = '/admin-panel';
             })
             .catch(error => {
                 if (error.response && error.response.status === 409 || error.response.status === 403) {
-                    // If the status code is 409, it indicates a conflict, meaning the user already exists
                     setUserNotFound(true);
                 } else {
-                    // Handle other types of errors (e.g., network error, server error, etc.)
                     console.error('An error occurred during registration:', error);
                 }
             });
@@ -56,7 +45,6 @@ const AppService = {
             const response = await AXIOS.delete(`/delete/article/${encodedTitle}`);
 
             if (response.status === 200) {
-                // Use a functional update to ensure you have the most recent state
                 setArticles(currentArticles => currentArticles.filter(article => article.title !== title));
             }
         } catch (error) {
@@ -67,6 +55,7 @@ const AppService = {
     handleSubmit: async (event, {
         title,
         content,
+        tag,
         selectedFiles,
         setArticles,
         setTitle,
@@ -84,24 +73,18 @@ const AppService = {
                         const canvas = document.createElement('canvas');
                         const ctx = canvas.getContext('2d');
 
-                        // Desired output size
                         canvas.width = 800;
                         canvas.height = 555;
 
-                        // Calculate the scaling factor to fill the canvas size
-                        // This assumes you want to fill the height and width completely
                         const scaleX = img.width / canvas.width;
                         const scaleY = img.height / canvas.height;
                         const scale = Math.min(scaleX, scaleY);
 
-                        // Calculate the top-left corner of the source image to start drawing from
                         const x = (img.width - scale * canvas.width) / 2;
                         const y = (img.height - scale * canvas.height) / 2;
 
-                        // Draw the image onto the canvas, cropping as needed
                         ctx.drawImage(img, x, y, scale * canvas.width, scale * canvas.height, 0, 0, canvas.width, canvas.height);
 
-                        // Convert the canvas to a Blob
                         canvas.toBlob(blob => {
                             if (blob) {
                                 resolve(blob);
@@ -119,9 +102,8 @@ const AppService = {
             });
         };
 
-
         let formData = new FormData();
-        formData.append('articleRequest', new Blob([JSON.stringify({title, content})], {
+        formData.append('articleRequest', new Blob([JSON.stringify({ title, content, tag })], {
             type: "application/json"
         }));
 
@@ -148,13 +130,16 @@ const AppService = {
             const newArticle = response.data;
             setArticles(prevArticles => [newArticle, ...prevArticles]);
 
+            // Reset the form states
             setTitle('');
             setContent('');
             setSelectedFiles([]);
+            setTag('');
         } catch (error) {
             console.error('There was an error!', error);
         }
     }
+
 };
 
 export default AppService;

@@ -21,6 +21,7 @@ public class RedisArticle {
     String title;
     String content;
     String image;
+    String tag;
 
     @TimeToLive
     Long expirationInSeconds;

@@ -37,6 +37,9 @@ public class Articles {
     @Column(name = "images_json")
     private String imagesJson; // Stores the JSON representation of images
 
+    @Column(name = "tag")
+    private String tag;
+
     @Transient // This field is ignored by JPA as it's not in the database
     private List<byte[]> images; // Used for logic in the application
 
